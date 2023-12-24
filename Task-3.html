@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black; /* Set background color to black */
+            color: white; /* Set text color to white */
+        }
+        #login-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #333; /* Dark gray background for the login container */
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <img src="C:\Users\Msi\Pictures\Screenshots\serv symbol.png" alt="Smart Serv Symbol" width="100" height="100">
+        <h1>Smart Serv</h1>
+        <form id="login-form">
+            <label for="username">Username (Email):</label>
+            <input type="text" id="username" placeholder="Enter your email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <button type="button" onclick="login()">Login</button>
+            <button type="button" onclick="forgotPassword()">Forgot Password</button>
+        </form>
+    </div>
+
+    <script>
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Validate email format
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(username)) {
+                alert('Invalid email format');
+                return;
+            }
+
+            // Validate password
+            var passwordRegex = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert('Invalid password format. Password must have at least 8 characters, including an uppercase letter and a number.');
+                return;
+            }
+
+            // Check for specific login credentials
+            if (username === 'shamnanisakshi2009@gmail.com' && password === 'SmartServTest@123') {
+                alert('Login successful! Redirecting to the dashboard...');
+                // Redirect to the dashboard page or perform other actions
+		localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'Task-4.html';
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        function forgotPassword() {
+            // Open default email client with pre-filled email
+            var subject = "Password Reset Request";
+            var body = "Dear Smart Serv Support,\n\nI would like to request a password reset. Please assist me.\n\nSincerely,\n[Your Name]";
+            var mailtoLink = "mailto:support@smartserv.io?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Include Google Charts library -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            color: white;
+            margin: 0;
+        }
+        #dashboard-container {
+            padding: 20px;
+            background-color: #7A94A6;
+        }
+        select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard-container">
+        <!-- Company Metrics Dropdown -->
+        <label for="metric-dropdown">Select Company Metric:</label>
+        <select id="metric-dropdown">
+            <option value="Total Revenue">Total Revenue</option>
+            <option value="Total Jobs avg">Total Jobs avg</option>
+            <option value="Tickets Created">Tickets Created</option>
+            <option value="Tickets Scheduled">Tickets Scheduled</option>
+            <option value="Outstanding Amount">Outstanding Amount</option>
+            <option value="Membership Sold">Membership Sold</option>
+            <option value="Jobs Completed">Jobs Completed</option>
+            <option value="Total Cancelled">Total Cancelled</option>
+        </select>
+
+        <!-- Company Metrics -->
+        <div id="company-metrics">
+            <!-- Metrics will be dynamically populated using JavaScript -->
+        </div>
+
+        <!-- Revenue by Job Location -->
+        <div id="revenue-by-location">
+            <!-- Chart will be dynamically populated using JavaScript -->
+        </div>
+
+        <!-- Revenue by Job Type -->
+        <div id="revenue-by-type">
+            <!-- Chart will be dynamically populated using JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Simulated data for Company Metrics
+        var companyMetricsData = {
+            'Total Revenue': '$406,411.29',
+            'Total Jobs avg': '$620',
+            'Tickets Created': 655,
+            'Tickets Scheduled': 735,
+            'Outstanding Amount': '$110,448.8',
+            'Membership Sold': 105,
+            'Jobs Completed': 436,
+            'Total Cancelled': 65
+        };
+
+        // Function to generate metrics HTML
+        function generateMetricsHTML(metrics) {
+            var html = '<h2>Company Metrics</h2>';
+            for (var key in metrics) {
+                html += '<div>' + key + ': ' + metrics[key] + '</div>';
+            }
+            return html;
+        }
+
+        // Function to update Company Metrics based on the selected metric
+        function updateMetrics(selectedMetric) {
+            var metricsData = {
+                'Total Revenue': '$406,411.29',
+                'Total Jobs avg': '$620',
+                'Tickets Created': 655,
+                'Tickets Scheduled': 735,
+                'Outstanding Amount': '$110,448.8',
+                'Membership Sold': 105,
+                'Jobs Completed': 436,
+                'Total Cancelled': 65
+            };
+
+            var displayMetrics = selectedMetric ? { [selectedMetric]: metricsData[selectedMetric] } : metricsData;
+            document.getElementById('company-metrics').innerHTML = generateMetricsHTML(displayMetrics);
+        }
+
+        // Initial update with all metrics
+        updateMetrics();
+
+        // Handle dropdown change event
+        document.getElementById('metric-dropdown').addEventListener('change', function() {
+            var selectedMetric = this.value;
+            updateMetrics(selectedMetric);
+        });
+
+        // Load the Google Charts library
+        google.charts.load('current', {'packages':['corechart']});
+        
+        // Set a callback to run when the Google Charts library is loaded
+        google.charts.setOnLoadCallback(drawCharts);
+
+        // Function to draw Google Charts
+        function drawCharts() {
+            // Simulated data for Revenue by Job Location
+            var locationData = google.visualization.arrayToDataTable([
+                ['Job Location', 'Revenue for November 2019'],
+                ['Everett', 60000],
+                ['Seattle', 60000],
+                ['Lynnwood', 49000],
+                ['Bothell', 47500],
+                ['Mukilteo', 46000],
+                ['Edmonds', 34000]
+            ]);
+
+            var locationOptions = {
+                title: 'Revenue for November 2019',
+                backgroundColor: '#7A94A6',
+                colors: ['#FF6384']
+            };
+
+            var locationChart = new google.visualization.BarChart(document.getElementById('revenue-by-location'));
+            locationChart.draw(locationData, locationOptions);
+
+            // Simulated data for Revenue by Job Type
+            var typeData = google.visualization.arrayToDataTable([
+                ['Job Type', 'Revenue for November 2019'],
+                ['Service Plumbing', 140000],
+                ['Bid Work HVAC', 130000],
+                ['Service HVAC', 80000],
+                ['Bid Work Plumbing', 78000],
+                ['HWT Replacement', 45000],
+                ['Maintenance', 44000],
+                ['Material Sale', 3000]
+            ]);
+
+            var typeOptions = {
+                title: 'Revenue for November 2019',
+                backgroundColor: '#7A94A6',
+                colors: ['#36A2EB']
+            };
+
+            var typeChart = new google.visualization.BarChart(document.getElementById('revenue-by-type'));
+            typeChart.draw(typeData, typeOptions);
+        }
+    </script>
+</body>
+</html>
